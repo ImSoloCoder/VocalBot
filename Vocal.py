@@ -10,7 +10,7 @@ import sqlite3
 import datetime
 import asyncio
 from datetime import timedelta
-import os
+
 
 
 
@@ -43,30 +43,6 @@ scheduler.start()
 
 # Словарь для временного хранения данных администратора
 admin_task = {}
-
-
-async def handle_client(reader, writer):
-    data = await reader.read(100)
-    message = data.decode()
-    print(f"Received: {message}")
-
-    writer.write(data)
-    await writer.drain()
-
-    print("Closing connection")
-    writer.close()
-    await writer.wait_closed()
-
-async def main():
-    port = int(os.environ.get("PORT", 8080))  # Получаем порт из переменных окружения
-    print(f"Starting server on port {port}")
-    server = await asyncio.start_server(handle_client, '0.0.0.0', port)  # Слушаем на всех интерфейсах
-    async with server:
-        await server.serve_forever()
-
-
-
-
 
 
 def schedule_async_task(coroutine, *args):
@@ -203,7 +179,7 @@ async def handle_schedule_confirmation(query: Update, context: ContextTypes.DEFA
             #reminder_time = meeting_datetime - datetime.timedelta(minutes=1)
 
             # Рассчитываем время напоминания (10 утра предыдущего дня)
-            reminder_time = (meeting_datetime - timedelta(days=1)).replace(hour=13, minute=4, second=0)
+            reminder_time = (meeting_datetime - timedelta(days=1)).replace(hour=13, minute=34, second=0)
 
             scheduler.add_job(
                 schedule_async_task,
@@ -296,8 +272,6 @@ app.add_handler(MessageHandler(filters.Text("Меню"), handle_menu_button))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
 #app.add_handler(MessageHandler(filters.TEXT & filters.Regex("^Меню$"), handle_menu_button))
 
-if __name__ == '__main__':
-    asyncio.run(main())
 
 # Запуск бота
 print("Бот запущен!")
