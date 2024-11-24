@@ -46,6 +46,12 @@ admin_task = {}
 def schedule_async_task(coroutine, *args):
     asyncio.run(coroutine(*args))
 
+def error(update, context):
+    logger.warning(f"Update {update} caused error {context.error}")
+
+# Регистрируем обработчик ошибок
+app.add_error_handler(error)
+
 # Команда /start с кнопками
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
