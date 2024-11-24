@@ -10,6 +10,7 @@ import sqlite3
 import datetime
 import asyncio
 from datetime import timedelta
+import os
 
 
 
@@ -42,6 +43,19 @@ scheduler.start()
 
 # Словарь для временного хранения данных администратора
 admin_task = {}
+
+
+async def main():
+    port = int(os.environ.get("PORT", 8080))  # Получаем порт
+    print(f"Starting server on port {port}")
+    server = await asyncio.start_server(handle_client, '0.0.0.0', port)  # Слушаем на всех интерфейсах
+    async with server:
+        await server.serve_forever()
+
+
+
+
+
 
 def schedule_async_task(coroutine, *args):
     asyncio.run(coroutine(*args))
@@ -270,7 +284,8 @@ app.add_handler(MessageHandler(filters.Text("Меню"), handle_menu_button))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
 #app.add_handler(MessageHandler(filters.TEXT & filters.Regex("^Меню$"), handle_menu_button))
 
-
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Запуск бота
 print("Бот запущен!")
