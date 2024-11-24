@@ -177,7 +177,7 @@ async def handle_schedule_confirmation(query: Update, context: ContextTypes.DEFA
             #reminder_time = meeting_datetime - datetime.timedelta(minutes=1)
 
             # Рассчитываем время напоминания (10 утра предыдущего дня)
-            reminder_time = (meeting_datetime - timedelta(days=1)).replace(hour=12, minute=48, second=0)
+            reminder_time = (meeting_datetime - timedelta(days=1)).replace(hour=12, minute=58, second=0)
 
             scheduler.add_job(
                 schedule_async_task,
