@@ -177,7 +177,7 @@ async def handle_schedule_confirmation(query: Update, context: ContextTypes.DEFA
             #reminder_time = meeting_datetime - datetime.timedelta(minutes=1)
 
             # Рассчитываем время напоминания (10 утра предыдущего дня)
-            reminder_time = (meeting_datetime - timedelta(days=1)).replace(hour=12, minute=58, second=0)
+            reminder_time = (meeting_datetime - timedelta(days=1)).replace(hour=13, minute=02, second=0)
 
             scheduler.add_job(
                 schedule_async_task,
@@ -275,4 +275,3 @@ app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
 # Запуск бота
 print("Бот запущен!")
 app.run_polling()
-app.idle()
