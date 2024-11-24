@@ -1,6 +1,6 @@
 # Токен вашего бота
 # TOKEN = '7763615801:AAFizJy48WSZdmoXOO-Q7pR8Xqu4F7KWUKw'
-# ADMIN_ID = 1166609863  # Замените на ваш Telegram ID
+# ADMIN_ID = 1166609863  462862390# Замените на ваш Telegram ID
 
 from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes
@@ -33,7 +33,7 @@ conn.commit()
 
 # Токен вашего бота
 TOKEN = '7763615801:AAFizJy48WSZdmoXOO-Q7pR8Xqu4F7KWUKw'
-ADMIN_ID = 462862390  # Укажите свой Telegram ID
+ADMIN_ID = 1166609863  # Укажите свой Telegram ID
 
 # Создание объекта приложения и планировщика задач
 app = Application.builder().token(TOKEN).build()
@@ -171,7 +171,7 @@ async def handle_schedule_confirmation(query: Update, context: ContextTypes.DEFA
             #reminder_time = meeting_datetime - datetime.timedelta(minutes=1)
 
             # Рассчитываем время напоминания (10 утра предыдущего дня)
-            reminder_time = (meeting_datetime - timedelta(days=1)).replace(hour=12, minute=02, second=0)
+            reminder_time = (meeting_datetime - timedelta(days=1)).replace(hour=12, minute=17, second=0)
 
             scheduler.add_job(
                 schedule_async_task,
