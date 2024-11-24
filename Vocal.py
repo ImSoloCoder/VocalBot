@@ -269,3 +269,4 @@ app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
 # Запуск бота
 print("Бот запущен!")
 app.run_polling()
+app.idle()
