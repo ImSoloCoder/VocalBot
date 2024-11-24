@@ -45,8 +45,20 @@ scheduler.start()
 admin_task = {}
 
 
+async def handle_client(reader, writer):
+    data = await reader.read(100)
+    message = data.decode()
+    print(f"Received: {message}")
+
+    writer.write(data)
+    await writer.drain()
+
+    print("Closing connection")
+    writer.close()
+    await writer.wait_closed()
+
 async def main():
-    port = int(os.environ.get("PORT", 8080))  # Получаем порт
+    port = int(os.environ.get("PORT", 8080))  # Получаем порт из переменных окружения
     print(f"Starting server on port {port}")
     server = await asyncio.start_server(handle_client, '0.0.0.0', port)  # Слушаем на всех интерфейсах
     async with server:
